@@ -27,8 +27,8 @@ if [ -z "$dstpath" -o -z "$dstdir" ] ; then
 	usage "bad destination-path"
 fi
 
-if [ -e "${dstpath}/.git" ] ; then
-	echo "${dstpath}/.git: skipping, already exists" 1>&2
+if [ -e "${dstpath}/${dstdir}.git" ] ; then
+	echo "${dstpath}/${dstdir}.git: skipping, already exists" 1>&2
 	exit 0
 fi
 
