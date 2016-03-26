@@ -27,6 +27,11 @@ if [ -z "$dstpath" -o -z "$dstdir" ] ; then
 	usage "bad destination-path"
 fi
 
+if [ -e "${dstpath}/.git" ] ; then
+	echo "${dstpath}/.git: skipping, already exists" 1>&2
+	exit 0
+fi
+
 mkdir -p "${dstpath}"
 cd "${dstpath}"
 git clone "${url}" -o "${dstdir}"
