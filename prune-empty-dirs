@@ -21,7 +21,7 @@ fi
 
 dir="$1"
 
-while /usr/bin/true ; do
+while true ; do
 	n=0
 	find "${dir}" -type d -a -empty -print0 > .tmp.dirs
 	if [ ! -s .tmp.dirs ] ; then
