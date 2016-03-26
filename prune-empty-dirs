@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -o nounset
+set -o errexit
+
+prog="$0"
+
+usage()
+{
+	exec 1>&2
+
+	echo "ERROR: $*"
+	echo "usage: $prog dir"
+	exit 1
+}
+
+
+if [ $# -ne 1 ] ; then
+	usage "bad args"
+fi
+
+dir="$1"
+
+while /usr/bin/true ; do
+	n=0
+	find "${dir}" -type d -a -empty -print0 > .tmp.dirs
+	if [ ! -s .tmp.dirs ] ; then
+		rm -f .tmp.dirs
+		exit 0
+	fi
+	cat .tmp.dirs | xargs -0 echo DEL:
+	cat .tmp.dirs | xargs -0 rmdir
+done

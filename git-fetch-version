@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+prog="$0"
+
+usage()
+{
+	exec 1>&2
+
+	echo "ERROR: $*"
+	echo "usage: $prog source-url commit-hash destination-path"
+	exit 1
+}
+
+if [ $# -ne 3 ] ; then
+	usage "bad args"
+fi
+
+url="$1"
+ver="$2"
+dstpath="$(dirname $3)"
+dstdir="$(basename $3)"
+
+if [ -z "$dstpath" -o -z "$dstdir" ] ; then
+	usage "bad destination-path"
+fi
+
+mkdir -p "${dstpath}"
+cd "${dstpath}"
+git clone "${url}" -o "${dstdir}"
+cd "${dstdir}"
+git checkout "${ver}"
